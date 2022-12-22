@@ -4,7 +4,7 @@ const register = async (req, res) => {
   const { name, usn, phone, email, branch } = req.body;
   const olduser = await applicant.findOne({ email });
   if (olduser) {
-    return res.status(400).json({ message: "Email already registered !!!" });
+    res.status(401).json({ message: "Email already registered !!!" });
   } else {
     const newuser = applicant.create({
       name,
@@ -15,9 +15,9 @@ const register = async (req, res) => {
     });
 
     if (newuser) {
-      return res.status(200).json({ message: "Registered successfully !!!" });
+      res.status(200).json({ message: "Registered successfully !!!" });
     } else {
-      return res.status(400).json({ message: "Something went wrong !!!" });
+      res.status(401).json({ message: "Something went wrong !!!" });
     }
   }
 };
