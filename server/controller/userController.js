@@ -1,37 +1,24 @@
 const applicant = require("../model/userModel");
 
 const register = async (req, res) => {
-  const { name, email, phone, branch, usn } = req.body;
-
-  try {
-    if (!name || !email || !phone || !branch || !usn) {
-      res
-        .status(400)
-        .json({ message: "Please fill in all the details properly !!!" });
-    }
-    const olduser = await applicant.findOne({ email });
-    if (olduser) {
-      res.status(400).json({ message: "Email already registered !!!" });
-    }
+  const { name, usn, phone, email, branch } = req.body;
+  const olduser = await applicant.findOne({ email });
+  if (olduser) {
+    return res.status(400).json({ message: "Email already registered !!!" });
+  } else {
     const newuser = applicant.create({
       name,
       usn,
-      branch,
-      email,
       phone,
+      email,
+      branch,
     });
+
     if (newuser) {
-      res.status(200).json({ message: "Registered successfully !!!" });
+      return res.status(200).json({ message: "Registered successfully !!!" });
     } else {
-      res
-        .status(400)
-        .json({ message: "Please fill in all the details properly !!!" });
+      return res.status(400).json({ message: "Something went wrong !!!" });
     }
-  } catch (error) {
-    console.log(error);
-    res
-      .status(400)
-      .json({ message: "Please fill in all the details properly !!!" });
   }
 };
 
