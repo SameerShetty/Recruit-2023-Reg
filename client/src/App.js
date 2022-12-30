@@ -51,7 +51,6 @@ function App() {
       formData.phone &&
       formData.branch &&
       formData.usn.length === 10 &&
-      (formData.phone.length === 10 || formData.phone.length === 13) &&
       isValidEmail(formData.email)
     ) {
       setLoading(true);
@@ -246,6 +245,8 @@ function App() {
                       className="form-control mb-3"
                       placeholder="Enter your phone number"
                       name="phone"
+                      pattern="^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$"
+                      title="e.g +919XXXXXXXX5,99XXXXXXX5,099XXXXXXX5"
                       required
                       id="phone"
                       value={formData.phone}
@@ -262,6 +263,7 @@ function App() {
                       placeholder="Enter your usn"
                       name="usn"
                       pattern="[14][siSI]{2}[0-9]{2}[a-zA-Z]{2}[0-9]{3}"
+                      title="e.g 1si23cs003,4si23cs003"
                       required
                       id="usn"
                       value={formData.usn}
