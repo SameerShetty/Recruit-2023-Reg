@@ -47,7 +47,7 @@ function ResultTable({ stateprop }) {
         console.log(err);
         setmsg(err.response.data.message);
       });
-  });
+  }, []);
   if (msg) {
     stateprop(false);
     return (

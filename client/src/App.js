@@ -168,18 +168,10 @@ function App() {
                         }}
                       />
                     </a>
-                    {/* <a
-                      href="http://corsit.sit.ac.in/"
-                      target={"_blank"}
-                      rel="noreferrer"
-                    >
-                      <RiEarthLine
-                        style={{ fontSize: "2rem", color: "#199FE3" }}
-                      />
-                    </a> */}
                   </div>
                   <button
                     className="btn btn-dark "
+                    onClick={(e) => e.preventDefault()}
                     data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
                     style={{
