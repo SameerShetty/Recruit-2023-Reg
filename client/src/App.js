@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "./component/Loader";
-import Preloader from "./component/Preloader";
 import ResultTable from "./component/ResultTable";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -11,7 +10,6 @@ import { FaInstagram, FaLinkedin } from "react-icons/fa";
 // import { RiEarthLine } from "react-icons/ri";
 
 function App() {
-  const [isrender, setrender] = useState(true);
   const [fdownload, setfdownload] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [formData, setformData] = useState({
@@ -21,12 +19,6 @@ function App() {
     usn: "",
     branch: "",
   });
-
-  useEffect(() => {
-    setTimeout(() => {
-      setrender(false);
-    }, 500);
-  }, []);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -88,7 +80,6 @@ function App() {
   };
   return (
     <>
-      {isrender && <Preloader />}
       <div
         className="container-fluid d-flex align-items-center justify-content-center flex-column"
         style={{ width: "100%", minHeight: "100vh" }}
@@ -187,7 +178,7 @@ function App() {
                   <li>
                     {" "}
                     The recruitments are to be held on{" "}
-                    <strong>17th Jan 2023.</strong>
+                    <strong>24th Jan 2023.</strong>
                   </li>
                   <li>
                     {" "}
@@ -195,7 +186,7 @@ function App() {
                   </li>
                   <li>
                     {" "}
-                    Timings : <strong>5:00 P.M. onwards</strong>{" "}
+                    Timings : <strong>5:15 P.M. onwards</strong>{" "}
                   </li>
                   <li>
                     {" "}
@@ -274,7 +265,7 @@ function App() {
                     </label>
                   </div>
                   <select
-                    class="form-select form-select-lg mb-3 "
+                    className="form-select form-select-lg mb-3 "
                     id="select-input"
                     value={formData.branch}
                     name="branch"
