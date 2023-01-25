@@ -197,6 +197,10 @@ function App() {
               </div>
 
               <div>
+                <h2 className="text-left p-1 m-1">
+                  Round 1 Results are out 🙌
+                </h2>
+                {/* 
                 <form onSubmit={handleClick}>
                   <h2 className="text-left p-1 m-1">Register Here</h2>
                   <div className="form-floating">
@@ -315,7 +319,13 @@ function App() {
                     {" "}
                     {isLoading ? <Loader kolor="#fafafa" /> : "Register"}
                   </button>
-                </form>
+                </form>*/}
+                <div className="m-1 p-1">
+                  <p>
+                    <br /> Click on the Results button to view and
+                    <br /> follow the instructions.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -356,7 +366,7 @@ function App() {
                   <li>
                     You will be <strong>assigned</strong> a{" "}
                     <strong>problem statement</strong> through{" "}
-                    <strong>text message </strong>and <strong>email</strong>
+                    <strong>text message </strong>and <strong>email.</strong>
                   </li>
                 </ul>
               ) : null}
