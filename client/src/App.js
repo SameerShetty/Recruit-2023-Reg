@@ -353,6 +353,11 @@ function App() {
                     <strong>before</strong> attending the
                     <strong> interview.</strong>
                   </li>
+                  <li>
+                    You will be <strong>assigned</strong> a{" "}
+                    <strong>problem statement</strong> through{" "}
+                    <strong>text message </strong>and <strong>email</strong>
+                  </li>
                 </ul>
               ) : null}
               <div className="w-100 d-flex align-items-center justify-content-between flex-nowrap">
