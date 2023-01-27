@@ -8,65 +8,106 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 // import { RiEarthLine } from "react-icons/ri";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 function App() {
   const [fdownload, setfdownload] = useState(false);
-  const [isLoading, setLoading] = useState(false);
-  const [formData, setformData] = useState({
+  const [show, setShow] = useState(false);
+  const [slotUsn, SetSlotUsn] = useState("");
+  const [slot, setSlot] = useState({
     name: "",
-    email: "",
-    phone: "",
     usn: "",
-    branch: "",
+    time: "",
+    day: "",
   });
+  const [isLoading, setLoading] = useState(false);
+  // const [formData, setformData] = useState({
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   usn: "",
+  //   branch: "",
+  // });
 
   const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setformData((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
+    const { value } = e.target;
+    SetSlotUsn(value);
   };
-  function isValidEmail(email) {
-    return /\S+@\S+\.\S+/.test(email);
-  }
+  // function isValidEmail(email) {
+  //   return /\S+@\S+\.\S+/.test(email);
+  // }
 
-  const handleClick = (e) => {
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+
+  //   if (
+  //     formData.name &&
+  //     formData.email &&
+  //     formData.usn &&
+  //     formData.phone &&
+  //     formData.branch &&
+  //     formData.usn.length === 10 &&
+  //     isValidEmail(formData.email)
+  //   ) {
+  //     setLoading(true);
+
+  //     const user = {
+  //       name: formData.name.toString().toLowerCase(),
+  //       email: formData.email.toString().toLowerCase(),
+  //       phone: formData.phone,
+  //       usn: formData.usn.toString().toLowerCase(),
+  //       branch: formData.branch.toString().toLowerCase(),
+  //     };
+  //     axios
+  //       .post("/signup", user)
+  //       .then((response) => {
+  //         if (response.status === 200) {
+  //           setLoading(false);
+  //           toast.success(response.data.message);
+  //           setformData({
+  //             name: "",
+  //             email: "",
+  //             phone: "",
+  //             usn: "",
+  //             branch: "",
+  //           });
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         setLoading(false);
+  //         toast.error(err.response.data.message);
+  //       });
+  //   } else {
+  //     toast.warning("Please fill in all the details properly !!!");
+  //     setLoading(false);
+  //   }
+  // };
+  const handleClickGetSlots = (e) => {
     e.preventDefault();
 
-    if (
-      formData.name &&
-      formData.email &&
-      formData.usn &&
-      formData.phone &&
-      formData.branch &&
-      formData.usn.length === 10 &&
-      isValidEmail(formData.email)
-    ) {
+    if (slotUsn.length === 10) {
       setLoading(true);
 
       const user = {
-        name: formData.name.toString().toLowerCase(),
-        email: formData.email.toString().toLowerCase(),
-        phone: formData.phone,
-        usn: formData.usn.toString().toLowerCase(),
-        branch: formData.branch.toString().toLowerCase(),
+        usn: slotUsn.toString().toLowerCase(),
       };
+      console.log(user);
       axios
-        .post("/signup", user)
+        .post("/api/slot", user)
         .then((response) => {
           if (response.status === 200) {
             setLoading(false);
-            toast.success(response.data.message);
-            setformData({
-              name: "",
-              email: "",
-              phone: "",
-              usn: "",
-              branch: "",
+
+            console.log(response.data);
+            setSlot({
+              name: response.data.name,
+              usn: response.data.usn,
+              time: response.data.time,
+              day: response.data.day,
             });
+
+            setShow(true);
           }
         })
         .catch((err) => {
@@ -175,7 +216,7 @@ function App() {
                 </div>
 
                 <ul style={{ margin: " 1rem .5rem " }}>
-                  <li>
+                  {/* <li>
                     {" "}
                     The recruitments are to be held on{" "}
                     <strong>24th Jan 2023.</strong>
@@ -187,7 +228,7 @@ function App() {
                   <li>
                     {" "}
                     Timings : <strong>5:15 P.M. onwards</strong>{" "}
-                  </li>
+                  </li> */}
                   <li>
                     {" "}
                     The <strong>results</strong> will be posted{" "}
@@ -198,8 +239,42 @@ function App() {
 
               <div>
                 <h2 className="text-left p-1 m-1">
-                  Round 1 Results are out 🙌
+                  Know your interview slots 👍
                 </h2>
+                <form onSubmit={handleClickGetSlots}>
+                  <div className="form-floating">
+                    <input
+                      type="text"
+                      className="form-control mb-3"
+                      placeholder="Enter your usn"
+                      name="usn"
+                      pattern="[14][siSI]{2}[0-9]{2}[a-zA-Z]{2}[0-9]{3}"
+                      title="e.g 1si23cs003,4si23cs003"
+                      required
+                      id="usn"
+                      value={slotUsn}
+                      onChange={handleOnChange}
+                    />
+                    <label htmlFor="usn" className="form-label">
+                      USN
+                    </label>
+                  </div>
+                  <button
+                    type="submit"
+                    className="btn btn-dark w-50 my-2"
+                    data-bs-toggle="modal2"
+                    data-bs-target="#staticBackdrop2"
+                    disabled={isLoading}
+                    style={{
+                      backgroundColor: "#2788F2",
+                      outline: "none",
+                      border: "none",
+                    }}
+                  >
+                    {" "}
+                    {isLoading ? <Loader kolor="#fafafa" /> : "Get slot"}
+                  </button>
+                </form>
                 {/* 
                 <form onSubmit={handleClick}>
                   <h2 className="text-left p-1 m-1">Register Here</h2>
@@ -320,18 +395,89 @@ function App() {
                     {isLoading ? <Loader kolor="#fafafa" /> : "Register"}
                   </button>
                 </form>*/}
-                <div className="m-1 p-1">
-                  <p>
-                    <br /> Click on the Results button to view and
-                    <br /> follow the instructions.
-                  </p>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
+      <Modal show={show} onHide={() => setShow(false)}>
+        <Modal.Header>
+          <Modal.Title>
+            {" "}
+            <h2>Slot Details</h2>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {" "}
+          {<h3>{slot.name.toString().toUpperCase()}</h3>}
+          {<h5>{slot.usn.toString().toUpperCase()}</h5>}
+          {
+            <h5>
+              Timings : <strong>{slot.time.toString().toUpperCase()}</strong>{" "}
+              <strong>{slot.day.toString().toUpperCase()}</strong>
+            </h5>
+          }
+          {
+            <h5>
+              Venue : <strong>CORSIT LAB , IEM DEPT 1st floor.</strong>
+            </h5>
+          }
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="dark" onClick={() => setShow(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <div
+        className="modal fade"
+        id="staticBackdrop2"
+        data-bs-backdrop="static2"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel2"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2 className="modal-title fs-5" id="staticBackdropLabel">
+                Slot Details
+              </h2>
+            </div>
+            <div className="modal-body">
+              {" "}
+              {<h2>{slot.name.toString().toUpperCase()}</h2>}
+              {<h4>USN :{slot.usn.toString().toUpperCase()}</h4>}
+              {
+                <h5>
+                  Timings :{" "}
+                  <strong>{slot.time.toString().toUpperCase()}</strong>{" "}
+                  <strong>{slot.day.toString().toUpperCase()}</strong>
+                </h5>
+              }
+              {
+                <p>
+                  Venue : <strong>CORSIT LAB , IEM DEPT 1st floor.</strong>
+                </p>
+              }
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary w-25"
+                data-bs-dismiss="modal2"
+                style={{
+                  outline: "none",
+                  border: "none",
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div
         className="modal fade"
         id="staticBackdrop"
