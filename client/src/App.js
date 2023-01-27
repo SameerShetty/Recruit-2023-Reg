@@ -429,7 +429,7 @@ function App() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div
+      {/* <div
         className="modal fade"
         id="staticBackdrop2"
         data-bs-backdrop="static2"
@@ -477,7 +477,7 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div
         className="modal fade"
         id="staticBackdrop"
