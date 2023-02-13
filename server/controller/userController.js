@@ -1,19 +1,20 @@
-const applicant = require("../model/userModel");
+const Member = require("../model/userModel");
+const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
-  const { name, usn, phone, email, branch } = req.body;
-  const olduser = await applicant.findOne({ email });
+  const { name, email, password } = req.body;
+  const olduser = await Member.findOne({ email });
   if (olduser) {
     res.status(401).json({ message: "Email already registered !!!" });
   } else {
-    const newuser = applicant.create({
+    const salt = await bcrypt.genSalt(12);
+    const hp = await bcrypt.hash(password, salt);
+    const member = new Member({
       name,
-      usn,
-      phone,
       email,
-      branch,
+      password: hp,
     });
-
+    const newuser = member.save();
     if (newuser) {
       res.status(200).json({ message: "Registered successfully !!!" });
     } else {

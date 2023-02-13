@@ -5,23 +5,15 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  usn: {
-    type: String,
-    required: true,
-  },
-  branch: {
-    type: String,
-    required: true,
-  },
   email: {
     type: String,
     required: true,
     unique: true,
   },
-  phone: {
+  password: {
     type: String,
     required: true,
   },
 });
 
-module.exports = mongoose.model("applicant", userSchema);
+module.exports = mongoose.model("Member", userSchema);
